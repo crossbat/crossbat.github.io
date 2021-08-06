@@ -70,7 +70,8 @@ plt.show()
 
 
     
-![png](output_8_0.png)
+![output_8_0](https://user-images.githubusercontent.com/86095931/128486985-594fd81c-fd79-449b-898c-e9bb4c12a5ca.png)
+
     
 
 
@@ -169,7 +170,8 @@ plt.show()
 
 
     
-![png](output_20_0.png)
+![output_20_0](https://user-images.githubusercontent.com/86095931/128487072-56f4535d-cc51-4298-850a-b8c8c5b06b14.png)
+
     
 
 
@@ -307,7 +309,8 @@ plt.show()
 
 
     
-![png](output_27_0.png)
+![output_27_0](https://user-images.githubusercontent.com/86095931/128487142-f69a348f-58c9-48db-a37f-5915de49c74d.png)
+
     
 
 
@@ -369,6 +372,7 @@ plt.show()
 
 
     
-![png](output_33_0.png)
+![output_33_0](https://user-images.githubusercontent.com/86095931/128487189-c22ca381-6ed6-4144-8af1-95a6c52fd97c.png)
+
     
 
