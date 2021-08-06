@@ -1,3 +1,8 @@
+---
+layout : single
+title : [Kaggle] Intel Image Classification
+---
+
 # [Kaggle : Intel Image Classification]
 url : https://www.kaggle.com/sukeshan/image-classification-accuracy-95
 
