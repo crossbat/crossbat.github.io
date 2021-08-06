@@ -1,4 +1,9 @@
- # [Kaggle Intel Image classification]
+---
+layout : post
+title : 'Kaggle Intel Image Classification - 2'
+---
+
+# [Kaggle Intel Image classification]
 
     앞에 올린 것은 나의 생각이 전혀 반영되지 않은 방식이기에
 
