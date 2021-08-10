@@ -1,6 +1,6 @@
 ---
 layout : post
-title : 'Kaggle Intel Image Classification - 2'
+title : '[Kaggle] Intel Image Classification - 2'
 ---
 
 # [Kaggle Intel Image classification]
