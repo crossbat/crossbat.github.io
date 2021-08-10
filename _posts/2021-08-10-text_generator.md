@@ -5,7 +5,9 @@ title : 'Text Generator'
 
 
 # Text Generator (Tensorflow Tutorial)
-    텐서플로우 튜토리얼을 보고 만들었고, 데이터만 다른 데이터를 사용하였다.
+- 텐서플로우 튜토리얼을 보고 만들었고, 데이터만 다른 데이터를 사용하였다.
+
+- - -
 
 - 필요 라이브러리 생성
 
