@@ -60,7 +60,7 @@ plt.show()
 
 
     
-![png](output_4_0.png)
+![output_4_0](https://user-images.githubusercontent.com/86095931/132815100-3cc7ac46-36f4-45e3-a1f2-93a769829cf8.png)
     
 
 
@@ -201,7 +201,8 @@ plot_model(model)
 
 
     
-![png](output_7_1.png)
+![output_7_1](https://user-images.githubusercontent.com/86095931/132815421-de7e920f-159d-46c6-8bb2-df6a59d4054b.png)
+
     
 
 
@@ -304,13 +305,13 @@ plt.show()
 
 
     
-![png](output_12_0.png)
+![output_12_0](https://user-images.githubusercontent.com/86095931/132815465-e3966867-2082-4e52-a8ed-fcd753fb3d72.png)
     
 
 
 
     
-![png](output_12_1.png)
+![output_12_1](https://user-images.githubusercontent.com/86095931/132815493-a66b3de1-9ec8-4aa9-afb5-fd82c8be8dea.png)
     
 
 
