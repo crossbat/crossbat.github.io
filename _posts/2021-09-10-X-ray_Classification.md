@@ -3,6 +3,12 @@ layout = 'post'
 title = X-ray Classification
 ---
 
+# [Kaggle] Pneumonia(폐렴) X-ray Classification
+
+1달 조금 안되는 시간동안 조금씩 타닥타닥 두드리고 있던 것이다. (너무 많이 놀았다.)
+
+
+- 필요 라이브러리 불러오기
 ```python
 import os
 from glob import glob
@@ -19,7 +25,7 @@ from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropou
 from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
 ```
 
-
+- zipfile 모듈로 zip파일 압축해제
 ```python
 zip_dir = '/content/drive/MyDrive/Data/archive (1).zip'
 
@@ -28,7 +34,7 @@ zip_data = zipfile.ZipFile(zip_dir)
 zip_data.extractall('/content')
 ```
 
-
+- 데이터가 들어있는 주소 지정하기
 ```python
 data_dir = '/content/chest_xray'
 ```
@@ -40,7 +46,7 @@ test_dir = os.path.join(data_dir, 'test')
 val_dir = os.path.join(data_dir, 'val')
 ```
 
-
+- 이미지 미리보기
 ```python
 for i in range(9):
     plt.subplot(3,3,i + 1)
@@ -57,14 +63,15 @@ for i in range(9):
 plt.show()
 
 ```
-
+(예전에는 이미지 불러오는 것도 제대로 못했는데
+그래도 지금은 아주 조금은 나아진 것 같다.)
 
     
 ![output_4_0](https://user-images.githubusercontent.com/86095931/132815100-3cc7ac46-36f4-45e3-a1f2-93a769829cf8.png)
     
 
 
-
+- ImageDataGenerator로 데이터셋 만들어주기
 ```python
 train_gen = ImageDataGenerator(
     rescale = 1/255,
@@ -83,8 +90,11 @@ val_gen = ImageDataGenerator(
     rescale = 1/255
 )
 ```
+이번 것 말고 전에 하고있던 90종의 동물을 분류하는 것에도 ImageDataGenerator를 사용했는데,
+훈련이 제대로 되지 않았다. 데이터가 터무니없이 부족한 것 때문에 그런 듯하다.
 
 
+- 데이터셋 이미지 속성 설정
 ```python
 train_set = train_gen.flow_from_directory(
     train_dir,
@@ -113,8 +123,11 @@ val_set = val_gen.flow_from_directory(
     Found 16 images belonging to 2 classes.
     
 
-
+- 모델 만들기
+(데이터가 적을 때는 모델을 적당히 복잡하게 만들어주는 것이 도움이 된단다)
 ```python
+
+
 model = Sequential([
     Conv2D(64, 3, padding = 'same', activation= 'relu', input_shape = (180, 180, 3)),
     MaxPooling2D(pool_size = (2,2)),
@@ -140,8 +153,6 @@ model = Sequential([
 
 model.summary()
 
-import pydot
-import graphviz
 from tensorflow.keras.utils import plot_model
 
 plot_model(model)
@@ -207,12 +218,17 @@ plot_model(model)
 
 
 
-
+- 모델 컴파일
+(다시 한 번 기억해야 할 것은 sparse는 1차원 정수 배열로 된 label일 때,
+나머지는 one-hot encoding으로 되어있을 때이다.)
 ```python
 model.compile(loss = 'binary_crossentropy', optimizer= 'rmsprop', metrics = ['acc'])
 ```
 
-
+- callback 함수 불러오기
+(EarlyStopping : 모니터링하고있는 변수가 진행방향과 반대로 갈 경우, 오버피팅 되는 것으로 간주하고 미리 멈춰줌
+ModelCheckpoint : 아직 어떻게 쓰는 건지 잘 모르겠다.
+쓰고싶은거 : TensorBoard)
 ```python
 es = EarlyStopping(monitor= 'val_loss', patience= 5, verbose= 1)
 mc = ModelCheckpoint(filepath= os.path.join(data_dir, 'log'), monitor= 'val_loss', save_weights_only= True, save_freq= 'epoch')
@@ -223,7 +239,7 @@ mc = ModelCheckpoint(filepath= os.path.join(data_dir, 'log'), monitor= 'val_loss
 callbacks = [es, mc]
 ```
 
-
+- 훈련 시작
 ```python
 history = model.fit_generator(train_set, steps_per_epoch= 50, epochs = 50, callbacks = callbacks, validation_data = test_set, validation_steps = 5)
 ```
@@ -279,7 +295,7 @@ history = model.fit_generator(train_set, steps_per_epoch= 50, epochs = 50, callb
     Epoch 00022: early stopping
     
 
-
+- 모델 정확도, 손실값 시각화
 ```python
 acc = history.history['acc']
 val_acc = history.history['val_acc']
@@ -315,7 +331,8 @@ plt.show()
     
 
 
-
-```python
-
-```
+느낀 점:
+나름 많이 익숙해졌다고 생각했고, 아는 것들을 써가면서 해보았지만,
+기대한 만큼 정확도가 나와주지 않았고, validation 값들은 전부 방방 뛰었다.
+어느 부분에서 잘못하고 있는지 찾아보고 케글에서 다른 방법들을
+더 찾아봐야 할 것 같다.
