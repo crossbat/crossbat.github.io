@@ -1,3 +1,8 @@
+---
+layout = 'post'
+title = X-ray Classification
+---
+
 ```python
 import os
 from glob import glob
