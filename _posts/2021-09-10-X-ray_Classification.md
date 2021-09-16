@@ -27,6 +27,7 @@ from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
 ```
 
 - zipfile 모듈로 zip파일 압축해제
+
 ```python
 zip_dir = '/content/drive/MyDrive/Data/archive (1).zip'
 
@@ -36,6 +37,8 @@ zip_data.extractall('/content')
 ```
 
 - 데이터가 들어있는 주소 지정하기
+
+
 ```python
 data_dir = '/content/chest_xray'
 ```
@@ -48,6 +51,8 @@ val_dir = os.path.join(data_dir, 'val')
 ```
 
 - 이미지 미리보기
+
+
 ```python
 for i in range(9):
     plt.subplot(3,3,i + 1)
@@ -73,6 +78,8 @@ plt.show()
 
 
 - ImageDataGenerator로 데이터셋 만들어주기
+
+
 ```python
 train_gen = ImageDataGenerator(
     rescale = 1/255,
@@ -96,6 +103,8 @@ val_gen = ImageDataGenerator(
 
 
 - 데이터셋 이미지 속성 설정
+
+
 ```python
 train_set = train_gen.flow_from_directory(
     train_dir,
@@ -126,6 +135,8 @@ val_set = val_gen.flow_from_directory(
 
 - 모델 만들기
 (데이터가 적을 때는 모델을 적당히 복잡하게 만들어주는 것이 도움이 된단다)
+
+
 ```python
 
 
@@ -222,6 +233,8 @@ plot_model(model)
 - 모델 컴파일
 (다시 한 번 기억해야 할 것은 sparse는 1차원 정수 배열로 된 label일 때,
 나머지는 one-hot encoding으로 되어있을 때이다.)
+
+
 ```python
 model.compile(loss = 'binary_crossentropy', optimizer= 'rmsprop', metrics = ['acc'])
 ```
@@ -230,6 +243,8 @@ model.compile(loss = 'binary_crossentropy', optimizer= 'rmsprop', metrics = ['ac
 (EarlyStopping : 모니터링하고있는 변수가 진행방향과 반대로 갈 경우, 오버피팅 되는 것으로 간주하고 미리 멈춰줌
 ModelCheckpoint : 아직 어떻게 쓰는 건지 잘 모르겠다.
 쓰고싶은거 : TensorBoard)
+
+
 ```python
 es = EarlyStopping(monitor= 'val_loss', patience= 5, verbose= 1)
 mc = ModelCheckpoint(filepath= os.path.join(data_dir, 'log'), monitor= 'val_loss', save_weights_only= True, save_freq= 'epoch')
@@ -241,6 +256,8 @@ callbacks = [es, mc]
 ```
 
 - 훈련 시작
+
+
 ```python
 history = model.fit_generator(train_set, steps_per_epoch= 50, epochs = 50, callbacks = callbacks, validation_data = test_set, validation_steps = 5)
 ```
@@ -297,6 +314,8 @@ history = model.fit_generator(train_set, steps_per_epoch= 50, epochs = 50, callb
     
 
 - 모델 정확도, 손실값 시각화
+
+
 ```python
 acc = history.history['acc']
 val_acc = history.history['val_acc']
