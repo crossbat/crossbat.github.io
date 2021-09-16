@@ -1,6 +1,6 @@
 ---
-layout = 'post'
-title = X-ray Classification
+layout : 'post'
+title : X-ray Classification
 ---
 
 # [Kaggle] Pneumonia(폐렴) X-ray Classification
