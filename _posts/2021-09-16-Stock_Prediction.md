@@ -1,3 +1,13 @@
+---
+layout : post
+title : '주가 예측해보기'
+---
+
+# 삼성주가 예측 해보기(테디노트 참고)
+
+혼자 하는데 학습도 제대로 안되고 해서 참고해서 했다. 어떤 부분이 잘못됬는지 열심히 찾아봤는데 못찾았다...
+
+- 라이브러리 
 ```python
 import FinanceDataReader as fdr
 import numpy as np
@@ -15,7 +25,7 @@ from tensorflow.keras.losses import Huber
 from tensorflow.keras.optimizers import Adam
 ```
 
-
+- 삼성주가 데이터 불러오기
 ```python
 stock = fdr.DataReader('005930')
 stock.head()
@@ -347,7 +357,7 @@ stock.head()
 </div>
 
 
-
+- 데이터 시각화
 
 ```python
 plt.figure(figsize = (16, 9))
@@ -365,10 +375,12 @@ plt.ylabel('price')
 
 
     
-![png](output_6_1.png)
+![output_6_1](https://user-images.githubusercontent.com/86095931/133551277-068da423-3720-49ba-b977-7d0651a04192.png)
     
 
 
+- 데이터 년도별로 나누어서 보기
+근데 뭔가 좀 이상하게 됨
 
 ```python
 time_steps = [['1990', '2000'],
@@ -391,10 +403,10 @@ plt.show()
 
 
     
-![png](output_7_0.png)
+![output_7_0](https://user-images.githubusercontent.com/86095931/133551417-054ac8ee-de52-4d6e-a121-2e3386e91d53.png)
     
 
-
+- 데이터 전처리
 
 ```python
 scaler = MinMaxScaler()
@@ -429,7 +441,7 @@ scaled
 df = pd.DataFrame(scaled, columns = scale_cols)
 ```
 
-
+- 데이터 분할
 ```python
 x_train, x_test, y_train, y_test = train_test_split(df.drop('Close', axis = 1), df['Close'], test_size = 0.2, shuffle = False)
 ```
@@ -575,7 +587,9 @@ x_train
 
 
 
+- 데이터셋 만드는 함수 지정
 
+이해는 되는데 잘 못써먹겠다. 많이 써야지
 ```python
 def windowed_dataset(series, window_size, batch_size, shuffle):
   series = tf.expand_dims(series, axis = -1)
@@ -610,7 +624,7 @@ for data in train_data.take(1):
     (32, 20, 1)
     (32, 1)
     
-
+- 모델 만들기
 
 ```python
 model = Sequential([
@@ -621,14 +635,14 @@ model = Sequential([
 ])
 ```
 
-
+- 모델 컴파일
 ```python
 loss = Huber()
 optimizer = Adam(0.005)
 model.compile(loss = loss, optimizer = optimizer\, metrics = ['mse'])
 ```
 
-
+- 콜백 함수 지정
 ```python
 es = EarlyStopping(monitor = 'val_loss', patience = 10)
 mc = ModelCheckpoint('/content/checkopint_logs',
@@ -639,7 +653,7 @@ mc = ModelCheckpoint('/content/checkopint_logs',
                      )
 ```
 
-
+- 모델 학습
 ```python
 history = model.fit(train_data, validation_data = (test_data),
                     epochs = 50, callbacks = [es, mc])
@@ -767,7 +781,7 @@ pred.shape
     (1180, 1)
 
 
-
+- 주가 예측 시각화
 
 ```python
 plt.figure(figsize = (12, 9))
@@ -779,7 +793,7 @@ plt.show()
 
 
     
-![png](output_25_0.png)
+![output_25_0](https://user-images.githubusercontent.com/86095931/133551551-8b82cbc4-503b-4fd2-b40a-66e15655e319.png)
     
 
 
