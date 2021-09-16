@@ -8,6 +8,8 @@ title : '주가 예측해보기'
 혼자 하는데 학습도 제대로 안되고 해서 참고해서 했다. 어떤 부분이 잘못됬는지 열심히 찾아봤는데 못찾았다...
 
 - 라이브러리 
+
+
 ```python
 import FinanceDataReader as fdr
 import numpy as np
@@ -26,6 +28,8 @@ from tensorflow.keras.optimizers import Adam
 ```
 
 - 삼성주가 데이터 불러오기
+
+
 ```python
 stock = fdr.DataReader('005930')
 stock.head()
@@ -380,7 +384,7 @@ plt.ylabel('price')
 
 
 - 데이터 년도별로 나누어서 보기
-근데 뭔가 좀 이상하게 됨
+*근데 뭔가 좀 이상하게 됨
 
 ```python
 time_steps = [['1990', '2000'],
@@ -590,6 +594,7 @@ x_train
 - 데이터셋 만드는 함수 지정
 
 이해는 되는데 잘 못써먹겠다. 많이 써야지
+
 ```python
 def windowed_dataset(series, window_size, batch_size, shuffle):
   series = tf.expand_dims(series, axis = -1)
