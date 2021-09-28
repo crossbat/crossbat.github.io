@@ -1,3 +1,12 @@
+---
+layout : post
+title : 'Weather Prediction'
+---
+
+시계열 데이터셋 만들기를 하지 못해서 애먹었던 것이다. 이제서야 했다.
+
+- 라이브러리 불러오기
+
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
@@ -12,6 +21,7 @@ from tensorflow.keras.utils import plot_model
 
 ```
 
+ - 데이터 불러오기
 
 ```python
 data_dir = 'C:/Users/Windows10/Desktop/코딩/data/jena_climate_2009_2016.csv'
@@ -22,11 +32,11 @@ data_dir = 'C:/Users/Windows10/Desktop/코딩/data/jena_climate_2009_2016.csv'
 df = pd.read_csv(data_dir)
 ```
 
+- 데이터 성분 확인
 
 ```python
 df.describe().T
 ```
-
 
 
 
@@ -230,7 +240,7 @@ print(df.columns)
            'wd (deg)'],
           dtype='object')
     
-
+- 데이터 상관관계 표 나타내기(plt.matshow)
 
 ```python
 plt.matshow(df.corr())
@@ -277,10 +287,11 @@ plt.yticks(range(df.shape[1]), df.columns)
 
 
     
-![png](output_5_1.png)
+![output_5_1](https://user-images.githubusercontent.com/86095931/135032374-113c1c17-ed20-4be0-9d1f-ceeab51ac8e3.png)
+
     
 
-
+- 쓰지 않을 데이터는 따로 빼놓기
 
 ```python
 df_dropped = df.drop(['Tdew (degC)', 'H2OC (mmol/mol)', 'rho (g/m**3)'], axis = 1)
@@ -665,8 +676,7 @@ df_dropped.describe().T
 </table>
 </div>
 
-
-
+- 바람(풍속, 풍향) -9999.0 
 
 ```python
 df_dropped['wv (m/s)'] = df_dropped['wv (m/s)'].replace(-9999.0, 0.0)
@@ -833,7 +843,7 @@ df_dropped.describe().T
 </div>
 
 
-
+- 데이터 분리
 
 ```python
 split = int(df_dropped.shape[0]*0.7)
@@ -842,6 +852,7 @@ train_data = df_dropped.iloc[:split]
 test_data = df_dropped.iloc[split:]
 ```
 
+-데이터 정제
 
 ```python
 class preprocessing:
@@ -1081,13 +1092,14 @@ train_scaled
 </div>
 
 
-
+- 데이터 분할(훈련, 검증)
 
 ```python
 train_data = train_scaled.iloc[:int(train_scaled.shape[0] * 0.7)]
 val_data = train_scaled.iloc[int(train_scaled.shape[0] * 0.7):]
 ```
 
+- x, y 데이터 분리
 
 ```python
 def x_y_divid(data, target_cols):
@@ -1149,6 +1161,7 @@ x_val, y_val = x_y_divid(data = val_data, target_cols= 'T (degC)')
 x_test, y_test = x_y_divid(data = test_scaled, target_cols= 'T (degC)')
 ```
 
+- 데이터셋 함수 만들기
 
 ```python
 def windowed_dataset(x_data, y_data, window_size, batch_size, shuffle):
@@ -1177,7 +1190,7 @@ for data in train_set.take(1):
 
     (64, 288, 10)
     
-
+- 모델 만들기
 
 ```python
 model = Sequential([
@@ -1214,13 +1227,14 @@ model.summary()
     Non-trainable params: 0
     _________________________________________________________________
     
-
+- 콜벡 함수 불러오기
 
 ```python
 mc = ModelCheckpoint(filepath = 'C:/Users/Windows10/Desktop/pythonProject/Git/logs/weather', monitor = 'val_loss', save_best_only= True, save_weights_only= True, save_freq= 'epoch')
 es = EarlyStopping(monitor= 'val_loss', patience= 5)
 ```
 
+- 모델 실행
 
 ```python
 history = model.fit(train_set, epochs= 50, batch_size = 64, callbacks= [mc, es], validation_data = val_set)
@@ -1255,7 +1269,8 @@ history = model.fit(train_set, epochs= 50, batch_size = 64, callbacks= [mc, es],
     Epoch 14/50
     3216/3216 [==============================] - 807s 251ms/step - loss: 1.8312e-05 - mse: 3.6625e-05 - val_loss: 4.3044e-04 - val_mse: 8.6087e-04
     
-
+    
+- 학습 결과(loss, mse)
 
 ```python
 hist = history.history
@@ -1279,16 +1294,18 @@ plt.show()
 
 
     
-![png](output_26_0.png)
-    
-
-
+![output_26_0](https://user-images.githubusercontent.com/86095931/135035129-452a10ae-7ef5-47de-8b44-e0425049b4ef.png)
 
     
-![png](output_26_1.png)
+
+
+
+    
+![output_26_1](https://user-images.githubusercontent.com/86095931/135035148-15c0e96b-7bb0-48a5-b614-6ed0b23577da.png)
+
     
 
-
+- 예측 결과
 
 ```python
 y_pred = model.predict(test_set)
@@ -1334,6 +1351,7 @@ plt.show()
 
 
     
-![png](output_29_0.png)
+![output_29_0](https://user-images.githubusercontent.com/86095931/135035220-be179450-33a5-44a3-ab03-0e67ea90cf86.png)
+
     
 
