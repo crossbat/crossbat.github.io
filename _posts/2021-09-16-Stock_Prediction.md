@@ -1,5 +1,5 @@
 ---
-layout : post
+layer : post
 title : '주가 예측해보기'
 ---
 
