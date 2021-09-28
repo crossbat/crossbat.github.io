@@ -852,7 +852,7 @@ train_data = df_dropped.iloc[:split]
 test_data = df_dropped.iloc[split:]
 ```
 
--데이터 정제
+- 데이터 정제
 
 ```python
 class preprocessing:
