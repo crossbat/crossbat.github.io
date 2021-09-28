@@ -1,5 +1,5 @@
 ---
-layout : post
+layer : post
 title : '[Kaggle] Intel Image Classification - 2'
 ---
 
