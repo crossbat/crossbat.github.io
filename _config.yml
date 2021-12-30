@@ -15,11 +15,11 @@
 minimal_mistakes_skin    : "air" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
 # Site Settings
-locale                   : "ko"
+locale                   : ""
 title                    : "타닥타닥"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
-name                     : crossbat
+name                     : "Crossbat"
 description              : "인공지능 공부 연습장"
 url                      : "https://crossbat.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
