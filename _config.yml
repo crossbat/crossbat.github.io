@@ -101,18 +101,18 @@ analytics:
 
 # Site Author
 author:
-  name             : "Your Name"
+  name             : "Crossbat"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "I am an **amazing** person."
+  bio              : "취미로 인공지능하는 연습장"
   location         : "Somewhere"
-  email            :
+  email            :  "xowls1999@gmail.com"
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
       url: "xowls1999@gmail.com"
     - label: "Website"
       icon: "fas fa-fw fa-link"
-      # url: "https://your-website.com"
+      url : "https://crossbat.github.io/project.github.io/"
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
       # url: "https://twitter.com/"
